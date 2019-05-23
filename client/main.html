@@ -1,0 +1,93 @@
+<head>
+  <title>todo(ari)</title>
+</head>
+
+<body>
+  <div class="container">
+    {{> tasks}}
+    {{> addtasks}}
+  </div>
+</body>
+
+<template name="tasks">
+  <div class="row">
+    <div class="col">
+      {{>loginButtons}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h1>Task Manager</h1>
+      {{#if currentUser}}
+        <button type="button" class="btn btn-link" style="color:black;" data-toggle="modal" data-target="#addtask"><i class="zmdi zmdi-plus"></i> Add a new task</button>
+      {{/if}}
+      {{#each ShowTasks}}
+        <div id={{_id}}>
+          {{#if PrivateTask}}
+            <div class="card-body task-list text-secondary" style= "padding: 5px;">
+              <div class="form-check card-text">
+                <input class="form-check-input js-checked" id=checkbox{{_id}} type="checkbox" checked={{Checked}} value="">
+                <label class="form-check-label text-white btn-link" role="button">
+                  {{Name}} (Private)
+                </label>
+                <a class="text-white text-right" role="button" href="#" style="float: right;"><i class="zmdi zmdi-close js-delete"></i></a>
+              </div>
+            </div>
+          {{/if}}
+
+          {{#if PublicTask}}
+            <div class="card-body task-list text-secondary" style= "padding: 5px;">
+              <div class="form-check card-text">
+                <input class="form-check-input js-checked" id=checkbox{{_id}} type="checkbox" checked={{Checked}} value="" >
+                <label class="form-check-label text-white btn-link" role="button">
+                  {{Name}}
+                </label>
+                <a class="text-white text-right" role="button" href="#" style="float: right;"><i class="zmdi zmdi-close js-delete"></i></a>
+              </div>
+            </div>
+          {{/if}}
+        </div>
+      {{/each}}
+    </div>
+  </div>
+</template>
+
+<template name="addtasks">
+  <div class="modal fade" id="addtask" tabindex="-1" role="dialog" aria-labelledby="addtask" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addtask">Add a new task</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Task Name :</span>
+              </div>
+              <input type="text" name="taskName" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+          </form>
+          <div class="row mt-2 ml-2">
+            <b>Task Status</b>
+          </div>
+          <div class="form-row align-items-center">
+            <div class="col-auto my-1">
+              <select class="custom-select mr-sm-2" id="setstatus">
+                <option selected value="1" >Public</option>
+                <option value="0">Private</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary js-addtask">Add Task</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
